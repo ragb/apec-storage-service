@@ -1,0 +1,23 @@
+db:
+  image:  sameersbn/postgresql:9.4
+  expose:
+    - 5432
+  environment:
+    DB_USER: storage
+    DB_PASS: storage
+    DB_NAME: storage
+
+
+storageservice:
+  build: target/docker/stage
+  expose:
+    - 8080
+  links:
+    - db
+  environment:
+    DB_USER: storage
+    DB_PASS: storage
+    DB_NAME: storage
+    DB_URL: jdbc:postgresql://db/storage?user=storage
+
+
